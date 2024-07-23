@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <unistd.h>
 
 #define MAX_BAR_SIZE 64
 #define MAX_ARRAY_SIZE 32
@@ -16,6 +15,15 @@ void update_screen(char* bar, int* array) {
   }
 }
 
+void wait(int seconds, long nano_seconds) {
+  struct timespec req;
+  struct timespec rem;
+  req.tv_sec = seconds;
+  req.tv_nsec = nano_seconds;
+
+  nanosleep(&req, &rem);
+}
+
 void bubble_sort(int* array, char* bar, void (*fn)(char*, int*)) {
   for (int i = 0; i < MAX_ARRAY_SIZE; i++) {
     for (int j = i + 1; j < MAX_ARRAY_SIZE; j++) {
@@ -25,7 +33,7 @@ void bubble_sort(int* array, char* bar, void (*fn)(char*, int*)) {
         array[j] = aux;
       }
 
-      usleep(10 * 1000);
+      wait(0, 10000000L);
       fn(bar, array);
     }
   }
