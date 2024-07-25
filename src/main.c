@@ -43,12 +43,14 @@ int main(int argc, char* argv[]) {
   int array[MAX_ARRAY_SIZE];
   shuffle(array);
 
-  char option[2];
+  char option;
   while (1) {
     printf("1: Bubble Sort\n2: Selection Sort\n3: Insertion Sort\n0: Quit\n\n");
-    scanf("%2s", option);
+    option = getchar();
 
-    switch (*option) {
+    printf("scanning...");
+
+    switch (option) {
     case '1':
       bubble_sort(array, MAX_ARRAY_SIZE, bar, &update_screen);
       break;
@@ -64,10 +66,11 @@ int main(int argc, char* argv[]) {
       break;
     }
 
+    int clean;
+    while ((clean = getchar()) != '\n' && clean != EOF) {}
+
     shuffle(array);
   }
-  // insertion_sort(arr, MAX_ARRAY_SIZE, bar, &update_screen);
-  // selection_sort(arr, bar, &update_screen);
-  // bubble_sort(arr, bar, &update_screen);
+  
   return 0;
 }
