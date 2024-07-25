@@ -1,12 +1,16 @@
 #include "sorting.h"
 
+static void swap(int* a, int* b) {
+  int aux = *a;
+  *a = *b;
+  *b = aux;
+}
+
 void bubble_sort(int* array, int array_size, char* bar, void (*fn)(char*, int*, int)) {
   for (int i = 0; i < array_size; i++) {
     for (int j = i + 1; j < array_size; j++) {
       if (array[i] > array[j]) {
-        int aux = array[i];
-        array[i] = array[j];
-        array[j] = aux;
+        swap(&array[i], &array[j]);
       }
 
       fn(bar, array, array_size);
@@ -25,9 +29,7 @@ void selection_sort(int* array, int array_size, char* bar, void (*fn)(char*, int
       fn(bar, array, array_size);
     }
 
-    int aux = array[min_index];
-    array[min_index] = array[i];
-    array[i] = aux;
+    swap(&array[min_index], &array[i]);
   }
 }
 
@@ -36,9 +38,7 @@ void insertion_sort(int* array, int array_size, char* bar, void (*fn)(char*, int
   while (i < array_size) {
     int j = i;
     while (j > 0 && array[j] < array[j - 1]) {
-      int aux = array[j];
-      array[j] = array[j - 1];
-      array[j - 1] = aux;
+      swap(&array[j], &array[j - 1]);
       j--;
 
       fn(bar, array, array_size);
