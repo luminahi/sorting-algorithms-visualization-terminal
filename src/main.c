@@ -48,8 +48,6 @@ int main(int argc, char* argv[]) {
     printf("1: Bubble Sort\n2: Selection Sort\n3: Insertion Sort\n0: Quit\n\n");
     option = getchar();
 
-    printf("scanning...");
-
     switch (option) {
     case '1':
       bubble_sort(array, MAX_ARRAY_SIZE, bar, &update_screen);
