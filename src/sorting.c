@@ -31,6 +31,8 @@ void selection_sort(int* array, int array_size, char* bar, void (*fn)(char*, int
 
     swap(&array[min_index], &array[i]);
   }
+
+  fn(bar, array, array_size);
 }
 
 void insertion_sort(int* array, int array_size, char* bar, void (*fn)(char*, int*, int)) {
