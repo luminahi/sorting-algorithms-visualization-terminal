@@ -5,7 +5,7 @@
 
 #define BAR_SYMBOL '.'
 #define MAX_BAR_SIZE 48
-#define MAX_ARRAY_SIZE 32
+#define MAX_ARRAY_SIZE 24
 
 void wait(int seconds, long nano_seconds) {
   struct timespec req;
@@ -16,8 +16,24 @@ void wait(int seconds, long nano_seconds) {
   nanosleep(&req, &rem);
 }
 
+void print_options(const char* options[], int n) {
+    for (int i = 0; i < n; i++) {
+    printf("\033[%d;1H%s", MAX_ARRAY_SIZE + i + 2, options[i]);
+    printf("\033[K");
+  }
+}
+
+void clear_screen() {
+  for (int i = 1; i <= MAX_ARRAY_SIZE; i++) {
+    printf("\033[%d;1H", i);
+    printf("\033[K");
+  }
+
+  printf("\033[H");
+}
+
 void update_screen(char* bar, int* array, int array_size) {
-  system("clear");
+  clear_screen();
 
   for (int i = 0; i < array_size; i++) {
     bar[array[i]] = '\0';
@@ -43,10 +59,18 @@ int main(int argc, char* argv[]) {
   int array[MAX_ARRAY_SIZE];
   shuffle(array);
 
-  char option;
+  const char* options[] = {
+    "1 - Bubble Sort",
+    "2 - Selection Sort",
+    "3 - Insertion Sort",
+    "0 - Exit"
+  };
+
+  print_options(options, sizeof(options)/sizeof(char*));
+  update_screen(bar, array, MAX_ARRAY_SIZE);
+
   while (1) {
-    printf("1: Bubble Sort\n2: Selection Sort\n3: Insertion Sort\n0: Quit\n\n");
-    option = getchar();
+    char option = getchar();
 
     switch (option) {
     case '1':
@@ -61,6 +85,8 @@ int main(int argc, char* argv[]) {
     case '0':
       exit(EXIT_SUCCESS);
     default:
+      printf("Invalid Option\n");
+      exit(EXIT_FAILURE);
       break;
     }
 
