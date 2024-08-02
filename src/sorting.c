@@ -51,7 +51,16 @@ void insertion_sort(int* array, int array_size, char* bar, void (*fn)(char*, int
   }
 }
 
-void merge(int* array, int start, int mid, int end) {
+void merge(
+  int* array, 
+  int start, 
+  int mid, 
+  int end, 
+  int array_size, 
+  char* bar, 
+  void (*fn)(char*, int*, int)
+  ) {
+    
     int size = end - start + 1;
     int index_start = start;
     int index_mid = mid + 1;
@@ -85,20 +94,27 @@ void merge(int* array, int start, int mid, int end) {
 
     for (index_aux = start; index_aux <= end; index_aux++) {
         array[index_aux] = array_aux[index_aux - start];
+        fn(bar, array, array_size);
     }
 
     free(array_aux);
 }
 
-void start_merge_sort(int* array, int start, int end, int array_size, char* bar, void (*fn)(char*, int*, int)) {
+void start_merge_sort(
+  int* array, 
+  int start, 
+  int end, 
+  int array_size, 
+  char* bar, 
+  void (*fn)(char*, int*, int)
+  ) {
     if (start < end) {
         int mid = (end + start) / 2;
 
         start_merge_sort(array, start, mid, array_size, bar, fn);
         start_merge_sort(array, mid + 1, end, array_size, bar, fn);
 
-        merge(array, start, mid, end);
-        fn(bar, array, array_size);
+        merge(array, start, mid, end, array_size, bar, fn);
     }
 }
 
