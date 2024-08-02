@@ -102,8 +102,6 @@ void start_merge_sort(int* array, int start, int end, int array_size, char* bar,
     }
 }
 
-#include <stdio.h>
-
 void merge_sort(int* array, int array_size, char* bar, void (*fn)(char*, int*, int)) {
   int end = array_size - 1;
   start_merge_sort(array, 0, end, array_size, bar, fn);

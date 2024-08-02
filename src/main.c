@@ -16,11 +16,14 @@ void wait(int seconds, long nano_seconds) {
   nanosleep(&req, &rem);
 }
 
-void print_options(const char* options[], int n) {
-  for (int i = 0; i < n; i++) {
+void print_options(const char* options[], int length) {
+  for (int i = 0; i < length; i++) {
     printf("\033[%d;1H%s", MAX_ARRAY_SIZE + i + 2, options[i]);
     printf("\033[K");
   }
+
+  printf("\033[%d;1H", MAX_ARRAY_SIZE + length + 2);
+  printf("\033[K");
 }
 
 void clear_screen() {
@@ -67,8 +70,12 @@ int main(int argc, char* argv[]) {
     "0 - Exit"
   };
 
-  print_options(options, sizeof(options)/sizeof(char*));
+  const int options_length = sizeof(options)/sizeof(char*);
+
+  printf("\033[2J");
+
   update_screen(bar, array, MAX_ARRAY_SIZE);
+  print_options(options, options_length);
 
   while (1) {
     char option = getchar();
@@ -93,6 +100,8 @@ int main(int argc, char* argv[]) {
       exit(EXIT_FAILURE);
       break;
     }
+  
+    print_options(options, options_length);
 
     int clean;
     while ((clean = getchar()) != '\n' && clean != EOF) {}
