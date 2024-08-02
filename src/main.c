@@ -17,7 +17,7 @@ void wait(int seconds, long nano_seconds) {
 }
 
 void print_options(const char* options[], int n) {
-    for (int i = 0; i < n; i++) {
+  for (int i = 0; i < n; i++) {
     printf("\033[%d;1H%s", MAX_ARRAY_SIZE + i + 2, options[i]);
     printf("\033[K");
   }
@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
     "1 - Bubble Sort",
     "2 - Selection Sort",
     "3 - Insertion Sort",
+    "4 - Merge Sort",
     "0 - Exit"
   };
 
@@ -81,6 +82,9 @@ int main(int argc, char* argv[]) {
       break;
     case '3':
       insertion_sort(array, MAX_ARRAY_SIZE, bar, &update_screen);
+      break;
+    case '4':
+      merge_sort(array, MAX_ARRAY_SIZE, bar, &update_screen);
       break;
     case '0':
       exit(EXIT_SUCCESS);
